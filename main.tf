@@ -3,21 +3,20 @@ provider "aws" {
 }
 
 resource "aws_instance" "apache-instance" {
-  ami           = "ami-0084a47cc718c111a"
+  ami           = var.ec2_ami
   instance_type = var.ec2_instance_type
   subnet_id     = aws_subnet.public-subnet.id
   vpc_security_group_ids = [
     aws_security_group.apache_sg.id,
     aws_security_group.maintanance_ssh_access.id
   ]
-
   tags = {
     Name = "ApacheServer"
   }
 }
 
 resource "aws_instance" "db-instance" {
-  ami           = "ami-0084a47cc718c111a"
+  ami           = var.ec2_ami
   instance_type = var.ec2_instance_type
   subnet_id     = aws_subnet.public-subnet.id
   vpc_security_group_ids = [
@@ -30,7 +29,7 @@ resource "aws_instance" "db-instance" {
 }
 
 resource "aws_vpc" "main-vpc" {
-  cidr_block = "10.0.0.0/16"
+  cidr_block = var.vpc_cidr
   tags = {
     Name = "project-18-11-2024-vpc"
   }
@@ -81,10 +80,10 @@ resource "aws_security_group" "apache_sg" {
     cidr_blocks = ["0.0.0.0/0"]
   }
   egress {
-    from_port   = 0
-    to_port     = 0
-    protocol    = "-1"
-    cidr_blocks = ["0.0.0.0/0"]
+    from_port   = var.port_egress["from_port"]
+    to_port     = var.port_egress["to_port"]
+    protocol    = var.port_egress["protocol"]
+    cidr_blocks = var.port_egress["cidr_blocks"]
   }
 }
 
@@ -99,10 +98,10 @@ resource "aws_security_group" "maintanance_ssh_access" {
     cidr_blocks = ["0.0.0.0/0"]
   }
   egress {
-    from_port   = 0
-    to_port     = 0
-    protocol    = "-1"
-    cidr_blocks = ["0.0.0.0/0"]
+    from_port   = var.port_egress["from_port"]
+    to_port     = var.port_egress["to_port"]
+    protocol    = var.port_egress["protocol"]
+    cidr_blocks = var.port_egress["cidr_blocks"]
   }
 }
 
@@ -115,11 +114,11 @@ resource "aws_security_group" "mysql_sg" {
     to_port     = 3306
     protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
-  }
+  }  
   egress {
-    from_port   = 0
-    to_port     = 0
-    protocol    = "-1"
-    cidr_blocks = ["0.0.0.0/0"]
+    from_port   = var.port_egress["from_port"]
+    to_port     = var.port_egress["to_port"]
+    protocol    = var.port_egress["protocol"]
+    cidr_blocks = var.port_egress["cidr_blocks"]
   }
 }
