@@ -29,7 +29,7 @@ resource "aws_instance" "db-instance" {
 }
 
 resource "aws_vpc" "main-vpc" {
-  cidr_block = var.vpc_cidr
+  cidr_block = "0.0.0.0/0"
   tags = {
     Name = "project-18-11-2024-vpc"
   }
