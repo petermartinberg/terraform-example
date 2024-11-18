@@ -10,12 +10,6 @@ variable "ec2_ami" {
   default     = "ami-0084a47cc718c111a"
 }
 
-variable "vpc_cidr" {
-  description = "CIDR block for VPC"
-  type        = string
-  default     = "10.0.0.0/16"
-}
-
 variable "port_egress" {
   description = "Egress Port Configuration allow all"
   type = object({
