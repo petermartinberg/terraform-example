@@ -4,7 +4,7 @@ provider "aws" {
 
 resource "aws_instance" "apache-instance" {
   ami           = "ami-0084a47cc718c111a"
-  instance_type = "t2.micro"
+  instance_type = var.ec2_instance_type
   subnet_id     = aws_subnet.public-subnet.id
   vpc_security_group_ids = [
     aws_security_group.apache_sg.id,
@@ -18,7 +18,7 @@ resource "aws_instance" "apache-instance" {
 
 resource "aws_instance" "db-instance" {
   ami           = "ami-0084a47cc718c111a"
-  instance_type = "t2.micro"
+  instance_type = var.ec2_instance_type
   subnet_id     = aws_subnet.public-subnet.id
   vpc_security_group_ids = [
     aws_security_group.mysql_sg.id,
