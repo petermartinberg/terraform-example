@@ -29,7 +29,7 @@ resource "aws_instance" "db-instance" {
 }
 
 resource "aws_vpc" "main-vpc" {
-  cidr_block = "0.0.0.0/0"
+  cidr_block = "10.0.0.0/16"
   tags = {
     Name = "project-18-11-2024-vpc"
   }
@@ -128,7 +128,9 @@ resource "aws_instance" "zicke1" {
   instance_type = var.instance_type
 
   # Security Group: Conditions for SSH-Access
-  vpc_security_group_ids = var.allow_ssh ? [aws_security_group.ssh.id] : []
+  # vpc_security_group_ids = var.allow_ssh ? [aws_security_group.ssh.id] : []
+  vpc_security_group_ids = var.allow_ssh ? [aws_security_group.ssh[0].id] : []
+
 
   tags = {
     Enviroment = var.allow_ssh ? "Development" : "Production"
