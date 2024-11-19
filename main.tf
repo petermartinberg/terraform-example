@@ -1,5 +1,5 @@
 provider "aws" {
-  region = "eu-central-1"
+  region = var.region
 }
 
 resource "aws_instance" "apache-instance" {
@@ -37,7 +37,7 @@ resource "aws_vpc" "main-vpc" {
 
 resource "aws_subnet" "public-subnet" {
   vpc_id                  = aws_vpc.main-vpc.id
-  cidr_block              = "10.0.0.0/20"
+  cidr_block              = var.public_subnet_cidr
   availability_zone       = "eu-central-1a"
   map_public_ip_on_launch = true
 }

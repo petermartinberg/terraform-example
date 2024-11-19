@@ -10,6 +10,18 @@ variable "ec2_ami" {
   default     = "ami-0084a47cc718c111a"
 }
 
+variable "aws_vpc_cidr_block" {
+  description = "cidr-block Main-VPC"
+  type = string
+  default = "10.0.0.0/16"
+}
+
+# variable "main_vpc_tag_name" {
+#   description = "Tag-Name Main VPC"
+#   type = string
+#   default = "project-18-11-2024-vpc"
+# }
+
 variable "port_egress" {
   description = "Egress Port Configuration allow all"
   type = object({
@@ -25,3 +37,33 @@ variable "port_egress" {
     cidr_blocks = ["0.0.0.0/0"]
   }
 }
+
+variable "region" {
+  description = "Region der Ressourcenerstellung"
+  type = string
+  default = "eu-central-1"
+  
+}
+
+variable "public_subnet_cidr" {
+  description = "cidr-block subnet"
+  type = string
+  default = "10.0.0.0/20"
+
+}
+
+variable "availability_zone" {
+  description = "av_zone"
+  type = "string"
+  default = "eu-central-1a"
+  
+}
+
+variable "aws_rt_cidr_block" {
+  description = "cidr-block Main Routtable"
+  type = string
+  default = "0.0.0.0/0"
+}
+
+
+
