@@ -1,7 +1,9 @@
 # Local Terraform directories
 **/.terraform/*
 
-/.terraform-example
+/.module-2
+
+
 
 # Terraform state files
 terraform.tfstate
