@@ -12,8 +12,8 @@ variable "ec2_ami" {
 
 variable "aws_vpc_cidr_block" {
   description = "cidr-block Main-VPC"
-  type = string
-  default = "10.0.0.0/16"
+  type        = string
+  default     = "10.0.0.0/16"
 }
 
 # variable "main_vpc_tag_name" {
@@ -40,30 +40,44 @@ variable "port_egress" {
 
 variable "region" {
   description = "Region der Ressourcenerstellung"
-  type = string
-  default = "eu-central-1"
-  
+  type        = string
+  default     = "eu-central-1"
+
 }
 
 variable "public_subnet_cidr" {
   description = "cidr-block subnet"
-  type = string
-  default = "10.0.0.0/20"
+  type        = string
+  default     = "10.0.0.0/20"
 
 }
 
 variable "availability_zone" {
   description = "av_zone"
-  type = string
-  default = "eu-central-1a"
-  
+  type        = string
+  default     = "eu-central-1a"
+
 }
 
 variable "aws_rt_cidr_block" {
   description = "cidr-block Main Routtable"
-  type = string
-  default = "0.0.0.0/0"
+  type        = string
+  default     = "0.0.0.0/0"
 }
 
+variable "instance_type" {
+  description = "The instancetype for the EC2-instance"
+  type        = string
+}
+
+variable "ami_id" {
+  description = "The AMI-ID for the EC2-instance"
+  type        = string
+}
+
+variable "allow_ssh" {
+  description = "Allow SSH to the instances"
+  type        = bool
+}
 
 

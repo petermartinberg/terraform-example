@@ -114,11 +114,43 @@ resource "aws_security_group" "mysql_sg" {
     to_port     = 3306
     protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
-  }  
+  }
   egress {
     from_port   = var.port_egress["from_port"]
     to_port     = var.port_egress["to_port"]
     protocol    = var.port_egress["protocol"]
     cidr_blocks = var.port_egress["cidr_blocks"]
+  }
+}
+
+resource "aws_instance" "zicke1" {
+  ami           = var.ami_id
+  instance_type = var.instance_type
+
+  # Security Group: Conditions for SSH-Access
+  vpc_security_group_ids = var.allow_ssh ? [aws_security_group.ssh.id] : []
+
+  tags = {
+    Enviroment = var.allow_ssh ? "Development" : "Production"
+  }
+}
+
+# Security Group for SSH (only Dev)
+resource "aws_security_group" "ssh" {
+  count       = var.allow_ssh ? 1 : 0
+  name        = "allow_ssh"
+  description = "Allows SSH-Access"
+
+  ingress {
+    from_port   = 22
+    to_port     = 22
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
   }
 }
